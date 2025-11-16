@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Recipe Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+  </head>
+  <body class="bg-softmint min-h-screen font-sans text-slate-900">
+    <header class="py-8">
+      <div class="max-w-4xl mx-auto flex items-center justify-between px-4">
+        <div>
+          <a href="/" class="flex items-center gap-3">
+            <h1 class="text-2xl font-extrabold">AI Recipe Finder</h1>
+          </a>
+          <p class="mt-1 text-sm text-slate-600">Enter ingredients and let AI compose recipes</p>
+        </div>
+        <nav class="flex items-center gap-4">
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="text-sm text-slate-800">Dashboard</a>
+            <form method="post" action="{% url 'logout' %}" class="inline">{% csrf_token %}<button class="text-sm text-emerald-600">Logout</button></form>
+          {% else %}
+            <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="text-sm text-emerald-600">Login</a>
+            <a href="{% url 'register' %}" class="text-sm text-slate-800">Sign up</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="mt-12 bg-[#0b1220] text-white py-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <p>Built by Kundan Kumar</p>
+        <p class="text-xs mt-2">© {% now "Y" %} Kundan Kumar</p>
+      </div>
+    </footer>
+  </body>
+</html>
